@@ -3,7 +3,7 @@ export class InventoryPage {
         this.page = page;
 
         this.cartLink = page.getByTestId("shopping-cart-link");
-
+        this.sortDropdown = page.locator('[data-test="product-sort-container"]');
     }
 
     async addToCart(productName) {
@@ -32,4 +32,12 @@ export class InventoryPage {
             {name: "Remove"}
         ).click();
     }
+    async sortBy(option){
+        await this.sortDropdown.select({label: option});
+    }
+
+    getProductPrices() {
+    return this.page.locator('[data-test="inventory-item-price"]');
+    }
+
 }
