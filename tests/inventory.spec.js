@@ -11,6 +11,13 @@ test ("Products are sorted by price, low to high", async ({page}) => {
 
     await inventoryPage.sortBy("Price (low to high)");
     const prices = await inventoryPage.getProductPrices().allTextContents();
-
     console.log(prices);
+
+    const numPrices = prices.map(
+        x => Number(x.replace("$", ""))
+    );
+    const sortedNumPrices = numPrices.sort();
+
+    expect(numPrices).toEqual(sortedNumPrices);
+
 })
