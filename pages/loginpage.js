@@ -1,32 +1,20 @@
-export class LoginPage{
+export class LoginPage {
 
-    constructor(page){
+    constructor(page) {
+        this.page = page;
 
-    this.page = page;
-
-    this.username =
-        page.getByTestId("user-name");
-
-    this.password =
-        page.getByTestId("password");
-
-    this.loginButton =
-        page.getByRole("button",
-        {name:"Login"});
-
-    }
-
-    async login(username, password) {
-        await this.username.fill(username);
-        await this.password.fill(password);
-        await this.loginButton.click();
-
+        this.username = page.locator('[data-test="username"]');
+        this.password = page.locator('[data-test="password"]');
+        this.loginButton = page.getByRole("button", { name: "Login" });
     }
 
     async goto() {
         await this.page.goto("https://www.saucedemo.com");
     }
 
-
-
+    async login(username, password) {
+        await this.username.fill(username);
+        await this.password.fill(password);
+        await this.loginButton.click();
+    }
 }

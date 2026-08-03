@@ -2,7 +2,7 @@ export class InventoryPage {
     constructor(page) {
         this.page = page;
 
-        this.cartLink = page.getByTestId("shopping-cart-link");
+        this.cartLink = page.getByTestId('[data-test="shopping-cart-link"]');
         this.sortDropdown = page.locator('[data-test="product-sort-container"]');
     }
 
@@ -33,11 +33,11 @@ export class InventoryPage {
         ).click();
     }
     async sortBy(option){
-        await this.sortDropdown.select({label: option});
+        await this.sortDropdown.selectOption({label: option});
     }
 
     getProductPrices() {
-    return this.page.locator('[data-test="inventory-item-price"]');
+        return this.page.locator('[data-test="inventory-item-price"]');
     }
 
 }
