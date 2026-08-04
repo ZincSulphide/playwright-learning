@@ -1,6 +1,7 @@
 import {test, expect} from '@playwright/test'
-import {LoginPage} from "../pages/loginpage"
+import {LoginPage} from "../pages/loginPage"
 import { InventoryPage } from '../pages/inventoryPage'
+import { credentials } from '../test-data/credentials'
 
 const sortingTests = [
     {
@@ -21,7 +22,7 @@ test ("Products are sorted by price", async ({page}) => {
     const inventoryPage = new InventoryPage(page);
 
     await loginPage.goto();
-    await loginPage.login("standard_user", "secret_sauce");//will change creds later acc to credentials.
+    await loginPage.login(credentials.standardUser.username, credentials.standardUser.password);//will change creds later acc to credentials.
 
     for (const sortTest of sortingTests) {
     await inventoryPage.sortBy(sortTest.option);

@@ -1,10 +1,6 @@
 import {test, expect} from '@playwright/test';
 import { LoginPage } from '../pages/loginpage';
-
-const correct_username = "standard_user";
-const incorrect_username = "hello";
-const correct_password = "secret_sauce";
-const incorrect_password = "abc132";
+import { credentials } from '../test-data/credentials';
 
 const Loginpage = new LoginPage(page);
 
@@ -19,7 +15,7 @@ test("Login with empty creds", async ({page}) => {
 test("Login with empty password", async ({page}) => {
 
     await page.goto("https://www.saucedemo.com");
-    await page.getByTestId("user-name").fill(correct_username);
+    await page.getByTestId("user-name").fill(credentials.standardUser.username);
     await page.getByRole("button", {name: 'Login'}).click();
     await expect(page.getByText("Epic sadface: Password is required")).toBeVisible();
 });

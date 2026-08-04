@@ -2,20 +2,18 @@ export class InventoryPage {
     constructor(page) {
         this.page = page;
 
-        this.cartLink = page.getByTestId('[data-test="shopping-cart-link"]');
-        this.sortDropdown = page.locator('[data-test="product-sort-container"]');
+        this.cartLink = page.getByTestId("shopping-cart-link");
+        this.sortDropdown = page.locator("product-sort-container");
     }
 
     async addToCart(productName) {
-        await this.page.locator(
-            ".inventory-item"
-        ).filter({
-            hasText: productName
-        }).getByRole(
-            "button",
-            {name: "Add to Cart"}
-        ).click();
+        const productId = productName
+            .toLowerCase()
+            .replaceAll(" ", "-");
 
+        await this.page
+            .getByTestId(`add-to-cart-${productId}`)
+            .click();
     }
 
     async openCart(){
