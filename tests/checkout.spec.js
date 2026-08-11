@@ -45,12 +45,13 @@ test ("Verify behavior when first name field not filled", async ({page}) => {
     const cartPage = new CartPage(page);
     const checkoutPage = new CheckoutPage(page);
 
-    inventoryPage.addToCart(products.backpack);
-    inventoryPage.openCart();
-    cartPage.checkout();
-    checkoutPage.fillInformation("", "Doe", "1247");
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.openCart();
+    await cartPage.checkout();
+    await checkoutPage.fillInformation("", "Doe", "1247");
+    await checkoutPage.continue();
 
-    const firstNameError = await page.getByTestId("error-button").allTextContents();
+    const firstNameError = await page.getByTestId("error").allTextContents();
 
     expect(firstNameError).toContain("Error: First Name is required");
 })
