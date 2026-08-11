@@ -2,13 +2,12 @@ import {test, expect} from "@playwright/test";
 import {LoginPage} from "../pages/loginPage";
 import {InventoryPage} from "../pages/inventoryPage";
 import {CartPage} from "../pages/cartPage";
-import { credentials } from "../test-data/credentials";
+import { CheckoutPage } from "../pages/checkoutPage";
 
-const productName = "Sauce Labs Backpack";
-const productNames = [
-    "Sauce Labs Backpack",
-    "Sauce Labs Bike Light"
-]
+import { credentials } from "../test-data/credentials";
+import { products } from "../test-data/products";
+
+
 
 test.beforeEach(async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -24,9 +23,8 @@ test("Verify products are being added", async ({page}) => {
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);
 
-    for (const product of productNames) {
-        await inventoryPage.addToCart(product);
-    }
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.addToCart(products.bikeLight);
 
     const cartCount = await cartPage.getProductCount();
     expect(cartCount).toBe("2");
@@ -34,9 +32,10 @@ test("Verify products are being added", async ({page}) => {
     await inventoryPage.openCart();
     const cartProductNames = await cartPage.getProductNames();
 
-    for (const product of productNames) {
-        expect(cartProductNames).toContain(product);
-    }
+    
+    expect(cartProductNames).toContain(products.backpack);
+    expect(cartProductNames).toContain(products.bikeLight);
+    
     
 
 })
@@ -45,7 +44,7 @@ test("Product is removed from cart", async ({page}) => {
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);
 
-    await inventoryPage.addToCart(productName);
+    await inventoryPage.addToCart(products.backpack);
     const cartCount = await cartPage.getProductCount();
     expect(cartCount).toBe("1");
 
@@ -53,10 +52,10 @@ test("Product is removed from cart", async ({page}) => {
     await inventoryPage.openCart();
 
     const productNames = await cartPage.getProductNames();
-    expect(productNames).toContain(productName);
+    expect(productNames).toContain(products.backpack);
 
 
-    await cartPage.removeProduct(productName);
+    await cartPage.removeProduct(products.backpack);
     const productsAfterRemoval = await cartPage.getProductNames();
     expect(productsAfterRemoval).toHaveLength(0);
 })
@@ -65,17 +64,32 @@ test("Verify removing one item from cart while keeping another", async ({page}) 
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);
 
-    for (const product of productNames) {
-        await inventoryPage.addToCart(product);
-    }
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.addToCart(products.bikeLight);
+    
     
     await inventoryPage.openCart();
-    await cartPage.removeProduct("Sauce Labs Bike Light");
+    await cartPage.removeProduct(products.bikeLight);
     const cartCount = await cartPage.getProductCount();
     const cartProducts = await cartPage.getProductNames();
 
     expect(cartCount).toBe("1");
-    expect(cartProducts).toContain("Sauce Labs Backpack");
-    expect(cartProducts).not.toContain("Sauce Labs Bike Light");
+    expect(cartProducts).toContain(products.backpack);
+    expect(cartProducts).not.toContain(products.bikeLight);
 
+})
+
+test ("Verify that checkout page opens", async ({page}) => {
+    const inventoryPage = new InventoryPage(page);
+    const cartPage = new CartPage(page);
+    const checkoutPage = new CheckoutPage(page);
+
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.openCart();
+    await cartPage.checkout();
+
+    await expect(checkoutPage.firstName).toBeVisible();
+    await expect(checkoutPage.lastName).toBeVisible();
+    await expect(checkoutPage.postalCode).toBeVisible();
+    await expect(checkoutPage.continueBtn).toBeVisible();
 })
