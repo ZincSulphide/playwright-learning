@@ -5,33 +5,10 @@ import { CartPage } from "../pages/cartPage";
 import { CheckoutPage } from "../pages/checkoutPage";
 import { credentials } from "../test-data/credentials";
 import { products } from "../test-data/products";
+import { checkoutData } from "../test-data/checkoutData";
 
 //test data
-const firstName = "John";
-const lastName = "Doe";
-const postalCode = "1247";
-const empty = "";
 
-const checkoutCases = [
-    {
-        firstName: "",
-        lastName: "Doe",
-        postalCode: "1247",
-        error: "Error: First Name is required"
-    },
-    {
-        firstName: "John",
-        lastName: "",
-        postalCode: "1247",
-        error: "Error: Last Name is required"
-    },
-    {
-        firstName: "John",
-        lastName: "Doe",
-        postalCode: "",
-        error: "Error: Postal Code is required"
-    }
-];
 
 test.beforeEach(async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -75,7 +52,7 @@ test ("Verify all validation errors appear accordingly", async ({page}) => {
     await inventoryPage.openCart();
     await cartPage.checkout();
 
-    for (const testCase of checkoutCases) {
+    for (const testCase of checkoutData.validationCases) {
         await checkoutPage.fillInformation(testCase.firstName, testCase.lastName, testCase.postalCode);
         await checkoutPage.continue();
 
@@ -92,7 +69,7 @@ test ("Verify that user can successfully checkout", async ({page}) => {
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.openCart();
     await cartPage.checkout();
-    await checkoutPage.fillInformation(firstName,lastName, postalCode);
+    await checkoutPage.fillInformation(checkoutData.valid.firstName, checkoutData.valid.lastName, checkoutData.valid.postalCode);
     await checkoutPage.continue();
     await checkoutPage.finishOrder();
 
