@@ -6,7 +6,32 @@ import { CheckoutPage } from "../pages/checkoutPage";
 import { credentials } from "../test-data/credentials";
 import { products } from "../test-data/products";
 
+//test data
+const firstName = "John";
+const lastName = "Doe";
+const postalCode = "1247";
+const empty = "";
 
+const checkoutCases = [
+    {
+        firstName: "",
+        lastName: "Doe",
+        postalCode: "1247",
+        error: "Error: First Name is required"
+    },
+    {
+        firstName: "John",
+        lastName: "",
+        postalCode: "1247",
+        error: "Error: Last Name is required"
+    },
+    {
+        firstName: "John",
+        lastName: "Doe",
+        postalCode: "",
+        error: "Error: Postal Code is required"
+    }
+];
 
 test.beforeEach(async ({ page }) => {
     const loginPage = new LoginPage(page);
@@ -27,7 +52,7 @@ test("Verify that checkout is successful", async ({page}) => {
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.openCart();
     await cartPage.checkout();
-    await checkoutPage.fillInformation("John", "Doe", "1247");
+    await checkoutPage.fillInformation(firstName, lastName, postalCode);
     await checkoutPage.continue();
 
     const productNames = await checkoutPage.productNames.allTextContents();
@@ -40,7 +65,8 @@ test("Verify that checkout is successful", async ({page}) => {
 
 }) 
 
-test ("Verify behavior when first name field not filled", async ({page}) => {
+test ("Verify all validation errors appear accordingly", async ({page}) => {
+
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);
     const checkoutPage = new CheckoutPage(page);
@@ -48,10 +74,27 @@ test ("Verify behavior when first name field not filled", async ({page}) => {
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.openCart();
     await cartPage.checkout();
-    await checkoutPage.fillInformation("", "Doe", "1247");
+
+    for (const testCase of checkoutCases) {
+        await checkoutPage.fillInformation(testCase.firstName, testCase.lastName, testCase.postalCode);
+        await checkoutPage.continue();
+
+        const error = await checkoutPage.errorMessage.allTextContents();
+        expect(error).toContain(testCase.error);
+    }
+})
+
+test ("Verify that user can successfully checkout", async ({page}) => {
+    const inventoryPage = new InventoryPage(page);
+    const cartPage = new CartPage(page);
+    const checkoutPage = new CheckoutPage(page);
+
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.openCart();
+    await cartPage.checkout();
+    await checkoutPage.fillInformation(firstName,lastName, postalCode);
     await checkoutPage.continue();
+    await checkoutPage.finishOrder();
 
-    const firstNameError = await page.getByTestId("error").allTextContents();
-
-    expect(firstNameError).toContain("Error: First Name is required");
+    await expect(checkoutPage.completeHeader).toHaveText("Thank you for your order!");
 })

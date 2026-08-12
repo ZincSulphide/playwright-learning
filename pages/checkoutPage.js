@@ -8,11 +8,14 @@ export class CheckoutPage {
 
         this.continueBtn = page.getByRole("button", {name: "continue"});
         this.overviewTitle = page.getByTestId("title");
+        this.errorMessage = page.getByTestId("error");
 
         //pt 2
         
         this.productNames = page.getByTestId("inventory-item-name");
         this.productPrices = page.getByTestId("inventory-item-price");
+        this.finishBtn = page.getByRole("button", {name: "finish"});
+        this.completeHeader = page.getByTestId("complete-header");
     }
 
     async fillInformation(firstName, lastName, postalCode) {
@@ -25,6 +28,9 @@ export class CheckoutPage {
         await this.continueBtn.click();
     }
     
+    async finishOrder() {
+        await this.finishBtn.click();
+    }
 
 
 
