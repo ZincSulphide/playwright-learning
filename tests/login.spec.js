@@ -1,12 +1,16 @@
-import {test, expect} from '@playwright/test';
+import { test } from '../fixtures/pages'
+import { expect} from '@playwright/test';
 import { LoginPage } from '../pages/loginpage';
 import { credentials } from '../test-data/credentials';
 import { log } from 'node:console';
 
 
 
-test("Login with empty creds", async ({page}) => {
-    const loginPage = new LoginPage(page);
+test("Login with empty creds", async ({
+    loginPage,
+    page
+}) => {
+    // const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.login(
         "",
@@ -16,18 +20,24 @@ test("Login with empty creds", async ({page}) => {
 
 });
 
-test("Login with empty password", async ({page}) => {
-    const loginpage = new LoginPage(page);
-    await loginpage.goto("https://www.saucedemo.com");
-    await loginpage.login(
+test("Login with empty password", async ({
+    loginPage,
+    page
+}) => {
+    // const loginpage = new LoginPage(page);
+    await loginPage.goto("https://www.saucedemo.com");
+    await loginPage.login(
         credentials.standardUser.username,
         ""
     );
     await expect(page.getByText("Epic sadface: Password is required")).toBeVisible();
 });
 
-test("Login with incorrect username", async ({page}) => {
-    const loginPage = new LoginPage(page);
+test("Login with incorrect username", async ({
+    loginPage,
+    page
+}) => {
+    // const loginPage = new LoginPage(page);
     await loginPage.goto("https://www.saucedemo.com");
     await loginPage.login(
         credentials.incorrectUserName.username,
@@ -36,8 +46,11 @@ test("Login with incorrect username", async ({page}) => {
     await expect(page.getByText("Epic sadface: Username and password do not match any user in this service")).toBeVisible();
 });
 
-test("Login with incorrect password", async ({page}) => {
-    const loginPage = new LoginPage(page);
+test("Login with incorrect password", async ({
+    loginPage,
+    page
+}) => {
+    // const loginPage = new LoginPage(page);
     await loginPage.goto("https://www.saucedemo.com");
     await loginPage.login(
         credentials.incorrectPassword.username,
@@ -46,8 +59,11 @@ test("Login with incorrect password", async ({page}) => {
     await expect(page.getByText("Epic sadface: Username and password do not match any user in this service")).toBeVisible();
 });
 
-test("Login with valid creds", async ({page}) => {
-    const loginPage = new LoginPage(page);
+test("Login with valid creds", async ({
+    page,
+    loginPage
+}) => {
+    // const loginPage = new LoginPage(page);
     await loginPage.goto();
     await loginPage.login(
         credentials.standardUser.username,
