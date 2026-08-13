@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
 });//login before each test
 
 
-test("Verify that checkout is successful", async ({page}) => {
+test("Verify that checkout step 1 is successful", async ({page}) => {
     const inventoryPage = new InventoryPage(page);
     const cartPage = new CartPage(page);
     const checkoutPage = new CheckoutPage(page);
@@ -29,7 +29,11 @@ test("Verify that checkout is successful", async ({page}) => {
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.openCart();
     await cartPage.checkout();
-    await checkoutPage.fillInformation(firstName, lastName, postalCode);
+    await checkoutPage.fillInformation(
+        checkoutData.valid.firstName,
+        checkoutData.valid.lastName,
+        checkoutData.valid.postalCode
+    );
     await checkoutPage.continue();
 
     const productNames = await checkoutPage.productNames.allTextContents();
@@ -53,7 +57,11 @@ test ("Verify all validation errors appear accordingly", async ({page}) => {
     await cartPage.checkout();
 
     for (const testCase of checkoutData.validationCases) {
-        await checkoutPage.fillInformation(testCase.firstName, testCase.lastName, testCase.postalCode);
+        await checkoutPage.fillInformation(
+            testCase.firstName, 
+            testCase.lastName, 
+            testCase.postalCode
+        );
         await checkoutPage.continue();
 
         const error = await checkoutPage.errorMessage.allTextContents();
@@ -69,7 +77,11 @@ test ("Verify that user can successfully checkout", async ({page}) => {
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.openCart();
     await cartPage.checkout();
-    await checkoutPage.fillInformation(checkoutData.valid.firstName, checkoutData.valid.lastName, checkoutData.valid.postalCode);
+    await checkoutPage.fillInformation(
+        checkoutData.valid.firstName, 
+        checkoutData.valid.lastName, 
+        checkoutData.valid.postalCode
+    );
     await checkoutPage.continue();
     await checkoutPage.finishOrder();
 

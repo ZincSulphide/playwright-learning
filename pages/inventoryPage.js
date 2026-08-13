@@ -3,7 +3,7 @@ export class InventoryPage {
         this.page = page;
 
         this.cartLink = page.getByTestId("shopping-cart-link");
-        this.sortDropdown = page.locator("product-sort-container");
+        this.sortDropdown = page.getByTestId("product-sort-container");
     }
 
     async addToCart(productName) {

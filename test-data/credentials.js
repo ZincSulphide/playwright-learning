@@ -12,5 +12,14 @@ export const credentials = {
     problemUser: {
         username: "problem_user",
         password: "secret_sauce"
+    },
+    incorrectUserName: {
+        username: "standard-user",
+        password: "secret_sauce"
+    },
+    incorrectPassword: {
+        username: "standard_user",
+        password: "secret-sauce"
     }
+
 };

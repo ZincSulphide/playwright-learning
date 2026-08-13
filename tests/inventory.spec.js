@@ -1,7 +1,9 @@
-import {test, expect} from '@playwright/test'
+import { test } from '../fixtures/pages'
+import {expect} from '@playwright/test'
 import {LoginPage} from "../pages/loginPage"
-import { InventoryPage } from '../pages/inventoryPage'
+// import { InventoryPage } from '../pages/inventoryPage'
 import { credentials } from '../test-data/credentials'
+
 
 const sortingTests = [
     {
@@ -14,15 +16,19 @@ const sortingTests = [
     }
 ];
 
-
-
-
-test ("Products are sorted by price", async ({page}) => {
+test.beforeEach(async ({ page }) => {
     const loginPage = new LoginPage(page);
-    const inventoryPage = new InventoryPage(page);
 
     await loginPage.goto();
-    await loginPage.login(credentials.standardUser.username, credentials.standardUser.password);//will change creds later acc to credentials.
+    await loginPage.login(
+        credentials.standardUser.username,
+        credentials.standardUser.password
+    );
+});//login before each test
+
+
+test ("Products are sorted by price", async ({inventoryPage}) => {
+    // const inventoryPage = new InventoryPage(page);
 
     for (const sortTest of sortingTests) {
     await inventoryPage.sortBy(sortTest.option);
