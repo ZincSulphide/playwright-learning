@@ -18,6 +18,12 @@ export const test = base.extend({
     checkoutPage: async ({page}, use) => {
         const checkoutPage = new CheckoutPage(page);
         await use(checkoutPage);
+    },
+
+    loginPage: async ({page}, use) => {
+        const loginPage = new LoginPage(page);
+        await use(loginPage);       
     }
+
 })
 
