@@ -16,8 +16,8 @@ const sortingTests = [
     }
 ];
 
-test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test.beforeEach(async ({ loginPage }) => {
+    // const loginPage = new LoginPage(page);
 
     await loginPage.goto();
     await loginPage.login(
