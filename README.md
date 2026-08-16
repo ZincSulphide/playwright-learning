@@ -69,3 +69,83 @@ playwright-learning/
 │
 ├── playwright.config.js
 └── README.md
+```
+
+### Page Object Model
+
+The project uses the Page Object Model to keep page locators and actions separate from the test logic.
+
+For example:
+```
+await inventoryPage.addToCart(products.backpack);
+await inventoryPage.openCart();
+await cartPage.checkout();
+```
+This keeps the tests easier to read and maintain.
+
+### Custom Fixtures
+
+Custom Playwright fixtures are used to provide Page Objects directly to tests.
+
+Instead of manually creating Page Objects:
+```
+const inventoryPage = new InventoryPage(page);
+const cartPage = new CartPage(page);
+```
+Tests can directly request them:
+```
+test("Example test", async ({ inventoryPage, cartPage }) => {
+    // test steps
+});
+```
+### Test Data
+
+Reusable test data is stored separately from the test files.
+
+Examples include:
+
+- User credentials
+- Product names
+- Checkout information
+- Checkout validation cases
+
+This helps keep the test files focused on test actions and assertions.
+
+### Running the Tests
+
+Install dependencies:
+```
+npm install
+
+Run the full test suite:
+
+npx playwright test
+```
+### Run a specific test file:
+```
+npx playwright test tests/inventory.spec.js
+```
+
+### Run tests with the Playwright UI:
+```
+npx playwright test --ui
+```
+
+### Learning Journey
+
+This is a learning project, and the structure evolved as new concepts were introduced.
+
+The project started with basic Playwright tests and was gradually refactored to include:
+
+- Page Objects
+- Reusable test data
+- Shared login setup with beforeEach
+- Custom fixtures for Page Objects
+- Data-driven validation testing
+
+More concepts and improvements will be added as I continue learning Playwright and test automation.
+
+### Tech Stack
+- JavaScript
+- Playwright
+- Node.js
