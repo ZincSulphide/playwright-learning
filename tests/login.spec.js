@@ -1,6 +1,6 @@
 import { test } from '../fixtures/pages'
 import { expect} from '@playwright/test';
-import { LoginPage } from '../pages/loginpage';
+// import { LoginPage } from '../pages/loginpage';
 import { credentials } from '../test-data/credentials';
 import { log } from 'node:console';
 
@@ -71,4 +71,17 @@ test("Login with valid creds", async ({
     )
     await expect(page).toHaveURL(/inventory.html/);
 });
+
+test("Login with locked out user", async (page, loginPage) => {
+    await loginPage.goto();
+    await loginPage.login(
+        credentials.lockedOutUser.username, 
+        credentials.lockedOutUser.password
+    );
+
+    await expect(
+        page.getByText("Epic sadface: Sorry, this user has been locked out.")
+    ).toBeVisible();
+
+})
 
