@@ -6,10 +6,15 @@ export class LoginPage {
         this.username = page.locator('[data-test="username"]');
         this.password = page.locator('[data-test="password"]');
         this.loginButton = page.getByRole("button", { name: "Login" });
+        this.errorMessage = page.locator('[data-test="error"]');
     }
 
     async goto() {
-        await this.page.goto("https://www.saucedemo.com");
+        await this.page.goto("/");
+    }
+
+    getError() {
+        return this.errorMessage;
     }
 
     async login(username, password) {
