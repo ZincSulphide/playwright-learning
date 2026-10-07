@@ -10,15 +10,18 @@ import { products } from "../test-data/products";
 
 
 
-test.beforeEach(async ({ loginPage }) => {
-    // const loginPage = new LoginPage(page);
+// test.beforeEach(async ({ loginPage }) => {
+//     // const loginPage = new LoginPage(page);
 
-    await loginPage.goto();
-    await loginPage.login(
-        credentials.standardUser.username,
-        credentials.standardUser.password
-    );
-});//login before each test
+//     await loginPage.goto();
+//     await loginPage.login(
+//         credentials.standardUser.username,
+//         credentials.standardUser.password
+//     );
+// });//login before each test
+test.beforeEach(async ({ inventoryPage }) => {
+    await inventoryPage.goto();
+});
 
 test("Verify products are being added", async ({cartPage, inventoryPage}) => {
     // const inventoryPage = new InventoryPage(page);

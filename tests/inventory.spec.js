@@ -1,8 +1,8 @@
 import { test } from '../fixtures/pages'
 import {expect} from '@playwright/test'
-import {LoginPage} from "../pages/loginPage"
+// import {LoginPage} from "../pages/loginPage"
 // import { InventoryPage } from '../pages/inventoryPage'
-import { credentials } from '../test-data/credentials'
+// import { credentials } from '../test-data/credentials'
 
 
 const sortingTests = [
@@ -16,16 +16,19 @@ const sortingTests = [
     }
 ];
 
-test.beforeEach(async ({ loginPage }) => {
-    // const loginPage = new LoginPage(page);
+// test.beforeEach(async ({ loginPage }) => {
+//     // const loginPage = new LoginPage(page);
 
-    await loginPage.goto();
-    await loginPage.login(
-        credentials.standardUser.username,
-        credentials.standardUser.password
-    );
-});//login before each test
+//     await loginPage.goto();
+//     await loginPage.login(
+//         credentials.standardUser.username,
+//         credentials.standardUser.password
+//     );
+// });//login before each test
 
+test.beforeEach(async ({ inventoryPage }) => {
+    await inventoryPage.goto();
+});
 
 test ("Products are sorted by price", async ({inventoryPage}) => {
     // const inventoryPage = new InventoryPage(page);
@@ -52,7 +55,4 @@ test ("Products are sorted by price", async ({inventoryPage}) => {
 
     expect(numPrices).toEqual(sortedNumPrices);
     }
-
-    
-
 })

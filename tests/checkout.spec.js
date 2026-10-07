@@ -11,16 +11,18 @@ import { checkoutData } from "../test-data/checkoutData";
 //test data
 
 
-test.beforeEach(async ({ loginPage }) => {
-    // const loginPage = new LoginPage(page);
+// test.beforeEach(async ({ loginPage }) => {
+//     // const loginPage = new LoginPage(page);
 
-    await loginPage.goto();
-    await loginPage.login(
-        credentials.standardUser.username,
-        credentials.standardUser.password
-    );
-});//login before each test
-
+//     await loginPage.goto();
+//     await loginPage.login(
+//         credentials.standardUser.username,
+//         credentials.standardUser.password
+//     );
+// });//login before each test
+test.beforeEach(async ({ inventoryPage }) => {
+    await inventoryPage.goto();
+});
 
 test("Verify that checkout step 1 is successful", async ({
     inventoryPage,

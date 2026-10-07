@@ -6,6 +6,10 @@ export class InventoryPage {
         this.sortDropdown = page.getByTestId("product-sort-container");
     }
 
+    async goto() {
+        await this.page.goto('/inventory.html');
+    }
+
     async addToCart(productName) {
         const productId = productName
             .toLowerCase()

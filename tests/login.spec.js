@@ -5,6 +5,8 @@ import { credentials } from '../test-data/credentials';
 import { loginErrors } from '../test-data/loginErrors';
 // import { log } from 'node:console';
 
+test.use({ storageState: { cookies: [], origins: [] } });
+
 
 for(const {title, username, password, expectedError} of loginErrors) {
     test(title, async ({page, loginPage}) => {
