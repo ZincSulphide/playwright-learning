@@ -4,10 +4,21 @@ export class InventoryPage {
 
         this.cartLink = page.getByTestId("shopping-cart-link");
         this.sortDropdown = page.getByTestId("product-sort-container");
+        this.menuBtn = page.getByRole("button", {name: "Open Menu"});
+        this.logoutLink = page.getByTestId("logout-sidebar-link");
     }
 
     async goto() {
         await this.page.goto('/inventory.html');
+    }
+
+    async openMenu() {
+        await this.menuBtn.click();
+    }
+
+    async logout() {
+        await this.openMenu();
+        await this.logoutLink.click();
     }
 
     async addToCart(productName) {
