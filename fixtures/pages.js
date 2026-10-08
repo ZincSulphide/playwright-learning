@@ -1,9 +1,28 @@
+
+
+
+
+
 import { test as base} from "@playwright/test";
 import { InventoryPage } from "../pages/inventoryPage";
 import { CartPage } from "../pages/cartPage"
 import { LoginPage } from "../pages/loginPage";
 import { CheckoutPage } from "../pages/checkoutPage";
 
+/**
+ * @typedef {Object} PageFixtures
+ * @property {LoginPage} loginPage
+ * @property {InventoryPage} inventoryPage
+ * @property {CartPage} cartPage
+ * @property {CheckoutPage} checkoutPage
+ */
+/** @type {import('@playwright/test').TestType<
+ *   import('@playwright/test').PlaywrightTestArgs &
+ *   import('@playwright/test').PlaywrightTestOptions &
+ *   PageFixtures,
+ *   import('@playwright/test').PlaywrightWorkerArgs &
+ *   import('@playwright/test').PlaywrightWorkerOptions
+ * >} */
 export const test = base.extend({
     inventoryPage: async ({page}, use) => {
         const inventoryPage = new InventoryPage(page);

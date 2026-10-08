@@ -45,12 +45,17 @@ export class InventoryPage {
             {name: "Remove"}
         ).click();
     }
+
     async sortBy(option){
         await this.sortDropdown.selectOption({label: option});
     }
 
     getProductPrices() {
         return this.page.locator('[data-test="inventory-item-price"]');
+    }
+
+    getProductNames() {
+        return this.page.locator('[data-test="inventory-item-name"]');
     }
 
 }
