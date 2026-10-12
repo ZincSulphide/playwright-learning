@@ -78,3 +78,35 @@ test ("Verify that checkout page opens", async ({page, cartPage, inventoryPage})
     await expect(checkoutPage.postalCode).toBeVisible();
     await expect(checkoutPage.continueBtn).toBeVisible();
 })
+
+test("Cart Badge persists on refresh", async ({
+    page,
+    inventoryPage,
+    cartPage
+}) => {
+    const product = products.backpack
+    await inventoryPage.addToCart(product);
+    const cartCount = await cartPage.getProductCount();
+    expect(cartCount).toBe("1");
+
+    await page.reload();
+    const afterReloadCartCount = await cartPage.getProductCount();
+    expect(afterReloadCartCount).toEqual(cartCount);
+})
+
+test("Cart persists after refresh", async ({
+    page,
+    cartPage,
+    inventoryPage
+}) => {
+    const product = products.backpack
+    await inventoryPage.addToCart(product);
+    await inventoryPage.openCart();
+    const cartProductsBeforeReload = await cartPage.getProductNames();
+    expect(cartProductsBeforeReload).toContain(product);
+
+    await page.reload();
+    const cartProductsAfterReload = await cartPage.getProductNames();
+    expect(cartProductsAfterReload).toContain(product);
+
+})
