@@ -41,7 +41,7 @@ End-to-end tests for [SauceDemo](https://www.saucedemo.com), written with Playwr
 
 ## Getting started
 
-**Prerequisites:** Node.js TODO-version
+**Prerequisites:** Node.js v24.14.1
 
 ```bash
 npm install
