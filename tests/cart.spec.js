@@ -1,31 +1,15 @@
 import { test } from "../fixtures/pages"
 import {expect} from "@playwright/test";
-import {LoginPage} from "../pages/loginPage";
-// import {InventoryPage} from "../pages/inventoryPage";
-// import {CartPage} from "../pages/cartPage";
 import { CheckoutPage } from "../pages/checkoutPage";
-
-import { credentials } from "../test-data/credentials";
 import { products } from "../test-data/products";
 
 
-
-// test.beforeEach(async ({ loginPage }) => {
-//     // const loginPage = new LoginPage(page);
-
-//     await loginPage.goto();
-//     await loginPage.login(
-//         credentials.standardUser.username,
-//         credentials.standardUser.password
-//     );
-// });//login before each test
 test.beforeEach(async ({ inventoryPage }) => {
     await inventoryPage.goto();
 });
 
 test("Verify products are being added", async ({cartPage, inventoryPage}) => {
-    // const inventoryPage = new InventoryPage(page);
-    // const cartPage = new CartPage(page);
+
 
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.addToCart(products.bikeLight);
@@ -45,8 +29,7 @@ test("Verify products are being added", async ({cartPage, inventoryPage}) => {
 })
 
 test("Product is removed from cart", async ({cartPage, inventoryPage}) => {
-    // const inventoryPage = new InventoryPage(page);
-    // const cartPage = new CartPage(page);
+
 
     await inventoryPage.addToCart(products.backpack);
     const cartCount = await cartPage.getProductCount();
@@ -65,8 +48,7 @@ test("Product is removed from cart", async ({cartPage, inventoryPage}) => {
 })
 
 test("Verify removing one item from cart while keeping another", async ({cartPage, inventoryPage}) => {
-    // const inventoryPage = new InventoryPage(page);
-    // const cartPage = new CartPage(page);
+
 
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.addToCart(products.bikeLight);
@@ -84,8 +66,7 @@ test("Verify removing one item from cart while keeping another", async ({cartPag
 })
 
 test ("Verify that checkout page opens", async ({page, cartPage, inventoryPage}) => {
-    // const inventoryPage = new InventoryPage(page);
-    // const cartPage = new CartPage(page);
+
     const checkoutPage = new CheckoutPage(page);
 
     await inventoryPage.addToCart(products.backpack);

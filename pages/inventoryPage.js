@@ -46,6 +46,14 @@ export class InventoryPage {
         ).click();
     }
 
+    async openProduct(productName) {
+        await this.page.locator(".inventory_item")
+            .filter({ hasText: productName })
+            .locator('[data-test$="title-link"]')
+            .click();
+    }
+
+
     async sortBy(option){
         await this.sortDropdown.selectOption({label: option});
     }
@@ -56,6 +64,11 @@ export class InventoryPage {
 
     getProductNames() {
         return this.page.locator('[data-test="inventory-item-name"]');
+    }
+
+    getProductCard(productName) {
+        return this.page.locator(".inventory_item")
+        .filter({hasText: productName})
     }
 
 }

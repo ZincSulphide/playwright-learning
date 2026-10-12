@@ -8,6 +8,7 @@ import { InventoryPage } from "../pages/inventoryPage";
 import { CartPage } from "../pages/cartPage"
 import { LoginPage } from "../pages/loginPage";
 import { CheckoutPage } from "../pages/checkoutPage";
+import { ProductDetailsPage } from "../pages/productDetailsPage";
 
 /**
  * @typedef {Object} PageFixtures
@@ -15,6 +16,7 @@ import { CheckoutPage } from "../pages/checkoutPage";
  * @property {InventoryPage} inventoryPage
  * @property {CartPage} cartPage
  * @property {CheckoutPage} checkoutPage
+ * @property {ProductDetailsPage} productDetailsPage
  */
 /** @type {import('@playwright/test').TestType<
  *   import('@playwright/test').PlaywrightTestArgs &
@@ -42,6 +44,10 @@ export const test = base.extend({
     loginPage: async ({page}, use) => {
         const loginPage = new LoginPage(page);
         await use(loginPage);       
+    },
+    productDetailsPage: async ({page}, use) => {
+        const productDetailsPage = new ProductDetailsPage(page);
+        await use(productDetailsPage);
     }
 
 })
