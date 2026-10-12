@@ -85,9 +85,6 @@ test ("Verify that user can successfully checkout", async ({
     cartPage,
     checkoutPage
 }) => {
-    // const inventoryPage = new InventoryPage(page);
-    // const cartPage = new CartPage(page);
-    // const checkoutPage = new CheckoutPage(page);
 
     await inventoryPage.addToCart(products.backpack);
     await inventoryPage.openCart();
@@ -101,4 +98,46 @@ test ("Verify that user can successfully checkout", async ({
     await checkoutPage.finishOrder();
 
     await expect(checkoutPage.completeHeader).toHaveText("Thank you for your order!");
+})
+
+test("Verify cancel on step one returns to cart page with item(s) still in cart", async ({
+    page,
+    inventoryPage,
+    cartPage,
+    checkoutPage
+}) => {
+    const product = products.backpack;
+    await inventoryPage.addToCart(product);
+    await inventoryPage.openCart();
+    await cartPage.checkout();
+    await checkoutPage.cancel();
+
+    await expect(page).toHaveURL("/cart.html");
+    const cartProducts = await cartPage.getProductNames();
+    const cartCount = await cartPage.getProductCount();
+    await expect(cartProducts).toContain(product);
+    await expect(cartCount).toBe("1");
+})
+
+test("Verify cancel on step two returns to inventory page with item(s) still in cart", async ({
+    page,
+    inventoryPage,
+    cartPage,
+    checkoutPage
+}) => {
+    const product = products.backpack;
+    await inventoryPage.addToCart(product);
+    await inventoryPage.openCart();
+    await cartPage.checkout();
+    await checkoutPage.fillInformation(
+        checkoutData.valid.firstName,
+        checkoutData.valid.lastName,
+        checkoutData.valid.postalCode
+    );
+    await checkoutPage.continue();
+    await checkoutPage.cancel();
+
+    await expect(page).toHaveURL("/inventory.html");
+    const cartCount = await cartPage.getProductCount();
+    await expect(cartCount).toBe("1");
 })

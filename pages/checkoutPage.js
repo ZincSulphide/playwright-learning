@@ -9,6 +9,7 @@ export class CheckoutPage {
         this.continueBtn = page.getByRole("button", {name: "continue"});
         this.overviewTitle = page.getByTestId("title");
         this.errorMessage = page.getByTestId("error");
+        this.cancelBtn = page.getByTestId("cancel");
 
         //pt 2
         
@@ -16,6 +17,10 @@ export class CheckoutPage {
         this.productPrices = page.getByTestId("inventory-item-price");
         this.finishBtn = page.getByRole("button", {name: "finish"});
         this.completeHeader = page.getByTestId("complete-header");
+    }
+
+    async cancel() {
+        await this.cancelBtn.click();
     }
 
     async fillInformation(firstName, lastName, postalCode) {
