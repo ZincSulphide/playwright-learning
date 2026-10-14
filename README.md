@@ -87,6 +87,6 @@ npx playwright show-report
 - [x] Logout and access-control tests
 - [x] Sorting by name
 - [x] Product details page
-- [ ] Cart persistence after a page refresh
+- [x] Cart persistence after a page refresh
 - [ ] Checkout cancel and totals
 - [ ] GitHub Actions CI
