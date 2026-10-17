@@ -37,6 +37,10 @@ export class CheckoutPage {
         await this.finishBtn.click();
     }
 
+    getPrices() {
+        return this.productPrices;
+    }
+
 
 
 }

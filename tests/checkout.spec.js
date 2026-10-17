@@ -1,12 +1,14 @@
 import {test} from "../fixtures/pages"
 import { expect} from "@playwright/test"
-import { LoginPage } from "../pages/loginPage";
+import { toCents } from "../utils/price";
+// import { LoginPage } from "../pages/loginPage";
 // import { InventoryPage } from "../pages/inventoryPage";
 // import { CartPage } from "../pages/cartPage";
 // import { CheckoutPage } from "../pages/checkoutPage";
 import { credentials } from "../test-data/credentials";
 import { products } from "../test-data/products";
 import { checkoutData } from "../test-data/checkoutData";
+import { toAsyncStreamable } from "node:stream/iter";
 
 //test data
 
@@ -140,4 +142,27 @@ test("Verify cancel on step two returns to inventory page with item(s) still in 
     await expect(page).toHaveURL("/inventory.html");
     const cartCount = await cartPage.getProductCount();
     await expect(cartCount).toBe("1");
+})
+
+test("Verify the cart total is accurate", async ({
+    page,
+    inventoryPage,
+    cartPage,
+    checkoutPage
+}) => {
+    await inventoryPage.addToCart(products.backpack);
+    await inventoryPage.addToCart(products.boltTShirt);
+    await inventoryPage.openCart();
+
+    await cartPage.checkout();
+
+    await checkoutPage.fillInformation(
+        checkoutData.valid.firstName,
+        checkoutData.valid.lastName,
+        checkoutData.valid.postalCode
+    );
+    await checkoutPage.continue();
+    const priceArray = checkoutPage.getPrices().allTextContents();
+
+
 })
