@@ -9,7 +9,7 @@ End-to-end tests for [SauceDemo](https://www.saucedemo.com), written with Playwr
 - **Inventory**: sorting by price (low to high, high to low) and by name (A to Z, Z to A)
 - **Product details**: opening a product and checking its name, price and description match the list
 - **Cart**: adding and removing items, and removing one item while keeping another
-- **Checkout**: step 1 validation errors (data-driven) and a full end-to-end purchase
+- **Checkout**: step 1 validation errors (data-driven) and a full end-to-end purchase complete with cancel checks and total comparison
 
 ## Techniques used
 
@@ -88,5 +88,5 @@ npx playwright show-report
 - [x] Sorting by name
 - [x] Product details page
 - [x] Cart persistence after a page refresh
-- [ ] Checkout cancel and totals
+- [x] Checkout cancel and totals
 - [ ] GitHub Actions CI
