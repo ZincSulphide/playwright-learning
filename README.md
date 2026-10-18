@@ -90,4 +90,4 @@ npx playwright show-report
 - [x] Product details page
 - [x] Cart persistence after a page refresh
 - [x] Checkout cancel and totals
-- [ ] GitHub Actions CI
+- [x] GitHub Actions CI
