@@ -15,8 +15,12 @@ export class CheckoutPage {
         
         this.productNames = page.getByTestId("inventory-item-name");
         this.productPrices = page.getByTestId("inventory-item-price");
+        this.subtotal = page.getByTestId("subtotal-label");
+        this.tax = page.getByTestId("tax-label");
+        this.total = page.getByTestId("total-label");
         this.finishBtn = page.getByRole("button", {name: "finish"});
         this.completeHeader = page.getByTestId("complete-header");
+
     }
 
     async cancel() {
@@ -39,6 +43,18 @@ export class CheckoutPage {
 
     getPrices() {
         return this.productPrices;
+    }
+
+    getSubtotal() {
+        return this.subtotal;
+    }
+
+    getTax() {
+        return this.tax;
+    }
+
+    getTotal() {
+        return this.total;
     }
 
 

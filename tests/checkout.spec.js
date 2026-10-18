@@ -5,10 +5,10 @@ import { toCents } from "../utils/price";
 // import { InventoryPage } from "../pages/inventoryPage";
 // import { CartPage } from "../pages/cartPage";
 // import { CheckoutPage } from "../pages/checkoutPage";
-import { credentials } from "../test-data/credentials";
+// import { credentials } from "../test-data/credentials";
 import { products } from "../test-data/products";
 import { checkoutData } from "../test-data/checkoutData";
-import { toAsyncStreamable } from "node:stream/iter";
+// import { toAsyncStreamable } from "node:stream/iter";
 
 //test data
 
@@ -162,7 +162,16 @@ test("Verify the cart total is accurate", async ({
         checkoutData.valid.postalCode
     );
     await checkoutPage.continue();
-    const priceArray = checkoutPage.getPrices().allTextContents();
+    await expect(checkoutPage.getSubtotal()).toBeVisible();
+    const priceArray = await checkoutPage.getPrices().allTextContents();
+    let expectCents = 0;
+    for(const price of priceArray) {
+        expectCents += toCents(price);
+    }
+
+    await expect(
+        toCents(await checkoutPage.getSubtotal().textContent())
+    ).toEqual(expectCents);
 
 
 })
