@@ -1,3 +1,4 @@
+[![Playwright Tests](https://github.com/ZincSulphide/playwright-learning/actions/workflows/playwright.yml/badge.svg)](https://github.com/ZincSulphide/playwright-learning/actions/workflows/playwright.yml)
 # Playwright Learning: SauceDemo Test Automation
 
 End-to-end tests for [SauceDemo](https://www.saucedemo.com), written with Playwright and JavaScript. I built this to practise test automation, structuring tests with the Page Object Model and keeping them fast, readable and cross-browser.
